@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import SmartLink from '@/components/SmartLink'
 import { useRouter } from 'next/router'
 import { useGlobal } from '@/lib/global'
 
@@ -13,7 +13,7 @@ const PaginationSimple = ({ page, showNext }) => {
   const { locale } = useGlobal()
   const router = useRouter()
   const currentPage = +page
-  const pagePrefix = router.asPath.replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
+  const pagePrefix = router.asPath.split('?')[0].replace(/\/page\/[1-9]\d*/, '').replace(/\/$/, '')
 
   return (
     <div
@@ -22,7 +22,7 @@ const PaginationSimple = ({ page, showNext }) => {
         data-aos-once="false"
         data-aos-anchor-placement="top-bottom"
         className="my-10 flex justify-between font-medium text-black dark:text-gray-100 space-x-2">
-      <Link
+      <SmartLink
         href={{
           pathname:
             currentPage - 1 === 1
@@ -40,8 +40,8 @@ const PaginationSimple = ({ page, showNext }) => {
         >
           ← {locale.PAGINATION.PREV}
         </button>
-      </Link>
-      <Link
+      </SmartLink>
+      <SmartLink
         href={{
           pathname: `/page/${currentPage + 1}`,
           query: router.query.s ? { s: router.query.s } : {}
@@ -56,7 +56,7 @@ const PaginationSimple = ({ page, showNext }) => {
         >
           {locale.PAGINATION.NEXT} →
         </button>
-      </Link>
+      </SmartLink>
     </div>
   )
 }
